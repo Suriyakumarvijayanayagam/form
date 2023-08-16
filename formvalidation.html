@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form with JS Validation</title>
+    <style>
+        body {
+            background-image: url('background.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            font-size: 18px;
+        }
+
+        #successAnimation {
+            display: none;
+            font-size: 48px;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ʀᴇɢɪꜱᴛʀᴀᴛɪᴏɴ ꜰᴏʀᴍ</h1>
+        <form id="registrationForm">
+            <label for="name">ɴᴀᴍᴇ:</label>
+            <input type="text" id="name" name="name" required><br>
+            <span class="error" id="nameError"></span><br>
+
+            <label for="email">ᴇᴍᴀɪʟ:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="phoneNumber">ᴘʜᴏɴᴇ ɴᴜᴍʙᴇʀ:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required><br>
+            <span class="error" id="phoneNumberError"></span><br>
+
+            <label for="dob">ᴅᴀᴛᴇ ᴏꜰ ʙɪʀᴛʜ:</label>
+            <input type="date" id="dob" name="dob" required><br><br>
+
+            <label for="age">ᴀɢᴇ:</label>
+            <select id="age" name="age" required>
+                <option value="">ꜱᴇʟᴇᴄᴛ ᴀɢᴇ
+                </option>
+                <!-- Generate age options using JS -->
+            </select><br><br>
+
+            <label for="occupation">ᴏᴄᴄᴜᴘᴀᴛɪᴏɴ:</label>
+            <select id="occupation" name="occupation" required>
+                <option value="">ꜱᴇʟᴇᴄᴛ ᴏᴄᴄᴜᴘᴀᴛɪᴏɴ</option>
+                <option value="student">ꜱᴛᴜᴅᴇɴᴛ</option>
+                <option value="workingProfessional">ᴡᴏʀᴋɪɴɢ ᴘʀᴏꜰᴇꜱꜱɪᴏɴᴀʟ</option>
+                <option value="professor">ᴘʀᴏꜰᴇꜱꜱᴏʀ</option>
+            </select><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+        <div id="successAnimation">&#x1F44D;</div>
+    </div>
+
+    <script>
+        // JavaScript Validation and Submission
+        const form = document.getElementById('registrationForm');
+        const nameInput = document.getElementById('name');
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const ageSelect = document.getElementById('age');
+        const successAnimation = document.getElementById('successAnimation');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            // Validate Name (not empty)
+            if (nameInput.value.trim() === '') {
+                document.getElementById('nameError').textContent = 'Name is required';
+                isValid = false;
+            } else {
+                document.getElementById('nameError').textContent = '';
+            }
+
+            // Validate Phone Number (at least 10 digits)
+            if (phoneNumberInput.value.replace(/\D/g, '').length < 10) {
+                document.getElementById('phoneNumberError').textContent = 'Phone Number must have at least 10 digits';
+                isValid = false;
+                alert('Phone Number must have at least 10 digits');
+            } else {
+                document.getElementById('phoneNumberError').textContent = '';
+            }
+
+            if (isValid) {
+                successAnimation.style.display = 'block';
+                setTimeout(() => {
+                    successAnimation.style.display = 'none';
+                    form.reset();
+                }, 2000);
+            }
+        });
+
+        // Generate age options
+        for (let i = 11; i <= 100; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            ageSelect.appendChild(option);
+        }
+    </script>
+</body>
+</html>
